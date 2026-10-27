@@ -8,8 +8,8 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 for m in "$REPO_DIR"/modules/*.sh; do . "$m"; done
 
 VERSION="$(cat "$REPO_DIR/VERSION" 2>/dev/null || echo dev)"
-LOOK_MODULES=(theme panel dock widgets)
-ALL_MODULES=(theme panel dock widgets vietnamese optimize nosleep remote)
+LOOK_MODULES=(theme wallpaper panel dock widgets)
+ALL_MODULES=(theme wallpaper panel dock widgets vietnamese optimize nosleep remote)
 
 usage() {
   cat <<EOF
@@ -19,16 +19,19 @@ Cach dung:  ./install.sh [tuy chon] [module...]
 
 Module:
   check        Kham may: CPU, RAM, HDD/SSD, thoi gian boot, goi y nang cap (khong thay doi gi)
-  look         Tron bo giao dien = theme + panel + dock + widgets
+  look         Tron bo giao dien = theme + wallpaper + panel + dock + widgets
     theme        Theme MacTahoe, icon, con tro, font Inter, hinh nen
+    wallpaper    10 hinh nen macOS + hinh nen dong doi theo gio
     panel        Thanh menu tren cung kieu macOS (logo Apple, dong ho, khay)
     dock         Dock Plank o day man hinh
-    widgets      Widget: Dong ho, Thoi tiet, Lich, May tinh, Dang phat nhac
+    widgets      Widget kieu macOS 26: Clock, Weather, Calendar, Now Playing, System (Alt+keo de di chuyen)
   vietnamese   Bo go tieng Viet ibus-bamboo
   optimize     Toi uu PC cu: preload, tat dich vu thua (hoi tung muc)
   nosleep      May luon hoat dong, khong sleep (de remote 24/7)
   remote       RustDesk + Tailscale: dieu khien tu Mac, iPhone, Android
   ai           Docker (chay khi can), Node.js, Python: san sang cho AI Agent / n8n
+  craft        App open source ArtCraft: PhotoCraft, VectorCraft, PdfCraft, WordCraft, GridCraft
+               (thay Photoshop, Illustrator, Acrobat, Word, Excel). Chon app: CRAFT_APPS="photocraft gridcraft"
   all          look + vietnamese + optimize + nosleep + remote
 
 Tuy chon:
@@ -41,7 +44,7 @@ Vi du:
   ./install.sh check
   ./install.sh look
   ./install.sh --dark look vietnamese
-  ./install.sh all ai
+  ./install.sh all ai craft
 Go cai dat:  ./uninstall.sh
 EOF
 }
@@ -56,7 +59,7 @@ while [[ $# -gt 0 ]]; do
     -h|--help)   usage; exit 0 ;;
     look)        modules+=("${LOOK_MODULES[@]}") ;;
     all)         modules+=("${ALL_MODULES[@]}") ;;
-    check|theme|panel|dock|widgets|vietnamese|optimize|nosleep|remote|ai) modules+=("$1") ;;
+    check|theme|wallpaper|panel|dock|widgets|vietnamese|optimize|nosleep|remote|ai|craft) modules+=("$1") ;;
     *) usage; die "Khong hieu tham so: $1" ;;
   esac
   shift
@@ -74,7 +77,7 @@ declare -A seen; ordered=()
 for m in "${modules[@]}"; do [[ -n "${seen[$m]:-}" ]] || { seen[$m]=1; ordered+=("$m"); }; done
 
 needs_desktop=0
-for m in "${ordered[@]}"; do [[ " theme panel dock widgets nosleep " == *" $m "* ]] && needs_desktop=1; done
+for m in "${ordered[@]}"; do [[ " theme wallpaper panel dock widgets nosleep " == *" $m "* ]] && needs_desktop=1; done
 if [[ $needs_desktop == 1 ]]; then require_xfce; backup_desktop; fi
 only_check=0; [[ "${ordered[*]}" == check ]] && only_check=1
 if [[ $only_check == 0 && "$DRY_RUN" != 1 ]]; then

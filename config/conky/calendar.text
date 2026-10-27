@@ -1,2 +1,0 @@
-${color2}${font Inter:weight=SemiBold:size=9}LỊCH${font}${color}
-${font DejaVu Sans Mono:size=11}${execpi 300 @@DIR@@/calendar.sh}${font}

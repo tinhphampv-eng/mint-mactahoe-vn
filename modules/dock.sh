@@ -26,6 +26,8 @@ module_dock() {
   run gsettings set $s zoom-percent 150
   run gsettings set $s hide-mode window-dodge
   run gsettings set $s show-dock-item false
+  # Tat bong do cua cua so dock (neu khong se thay 1 vet ke ngang qua man hinh)
+  xfset xfwm4 /general/show_dock_shadow bool false
 
   # Dock trong -> them cac app quen thuoc co tren may
   local items="$HOME/.config/plank/dock1/launchers" app f

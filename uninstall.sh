@@ -11,8 +11,9 @@ title "Khoi phuc giao dien tu $src"
 confirm "Tiep tuc?" || exit 0
 
 # Tat widget, khoi phuc panel/theme
-pkill -f "conky -c $HOME/.config/conky/mint-mactahoe-vn" 2>/dev/null
+pkill -x conky 2>/dev/null
 rm -f "$HOME/.config/autostart/mint-mactahoe-widgets.desktop"
+systemctl --user disable --now mactahoe-wallpaper.timer 2>/dev/null
 pkill -x xfce4-panel 2>/dev/null
 xfconf-query -c xfce4-panel -p /panels -rR 2>/dev/null
 xfconf-query -c xfce4-panel -p /plugins -rR 2>/dev/null

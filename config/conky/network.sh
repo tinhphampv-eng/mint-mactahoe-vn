@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
-# Mang dang dung (tu nhan theo default route) + IP Tailscale neu co.
+# Active network (from the default route) and Tailscale IP, for the right column of the System widget.
+g='${goto 292}'
 dev=$(ip route show default 2>/dev/null | awk '{print $5; exit}')
+echo "$g\${font Inter:size=8}\${color2}NETWORK\${color}\${font}"
 if [[ -n "$dev" ]]; then
-  if [[ -d /sys/class/net/$dev/wireless ]]; then
-    name="Wi-Fi $(iwgetid -r 2>/dev/null)"
-  else
-    name="Mạng dây"
-  fi
-  echo "${name} \${alignr}\${color1}↓\${color} \${downspeed $dev}  \${color1}↑\${color} \${upspeed $dev}"
+  [[ -d /sys/class/net/$dev/wireless ]] && name="Wi-Fi" || name="Ethernet"
+  echo "$g\${font Inter:size=9}↓ \${downspeedf $dev}K\${font}"
+  echo "$g\${font Inter:size=9}\${color2}↑ \${upspeedf $dev}K\${color}\${font}"
 else
-  echo '${color2}Không có mạng${color}'
+  echo "$g\${color2}Offline\${color}"
 fi
-ts=$(ip -4 -o addr show tailscale0 2>/dev/null | awk '{print $4}' | cut -d/ -f1)
-[[ -n "$ts" ]] && echo "Tailscale \${alignr}\${color2}${ts}\${color}"
 exit 0

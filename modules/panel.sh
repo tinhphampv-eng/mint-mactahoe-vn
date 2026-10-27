@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Thanh tren cung kieu macOS:  | ............ | khay | thong bao | am thanh | pin | dong ho | nguon
+# Thanh tren cung kieu macOS:  | ............ | khay | thong bao | am thanh | pin | dong ho (Dang xuat/Tat may nam trong menu )
 # Dung lai tu dau panel XFCE (da sao luu truoc do).
 
 module_panel() {
@@ -16,7 +16,7 @@ module_panel() {
 
   # id:loai plugin, theo thu tu tu trai sang phai
   local plugins=(1:whiskermenu 2:separator 3:systray 4:xapp-status-plugin 5:notification-plugin
-                 6:pulseaudio 7:power-manager-plugin 8:clock 9:actions)
+                 6:pulseaudio 7:power-manager-plugin 8:clock)
   local ids=() item id kind
   for item in "${plugins[@]}"; do
     id=${item%%:*}; kind=${item#*:}
@@ -43,12 +43,10 @@ module_panel() {
   # Khoang trong day thanh sang phai
   xfset xfce4-panel /plugins/plugin-2/expand bool true
   xfset xfce4-panel /plugins/plugin-2/style  uint 0
-  # Dong ho: "Th 4 28/10   00:05"
+  # Dong ho kieu macOS: "Wed Oct 28  00:05"
   xfset xfce4-panel /plugins/plugin-8/digital-layout      uint   3
-  xfset xfce4-panel /plugins/plugin-8/digital-time-format string "%a %d/%m   %H:%M"
+  xfset xfce4-panel /plugins/plugin-8/digital-time-format string "%a %b %-d   %H:%M"
   xfset xfce4-panel /plugins/plugin-8/digital-time-font   string "Inter Semi-Bold 10"
-  # Nut nguon gon: chi hien menu
-  xfset xfce4-panel /plugins/plugin-9/appearance uint 1
 
   [[ "$DRY_RUN" == 1 ]] || { (setsid xfce4-panel &>/dev/null &); sleep 2; }
   ok "Thanh menu da san sang"

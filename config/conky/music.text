@@ -1,2 +1,1 @@
-${color2}${font Inter:weight=SemiBold:size=9}ĐANG PHÁT${font}${color}
 ${execpi 3 @@DIR@@/music.sh}

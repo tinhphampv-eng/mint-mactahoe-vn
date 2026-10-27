@@ -1,31 +1,31 @@
--- Phan cau hinh chung, duoc ghep vao dau moi widget khi cai dat.
--- @@X@@ @@Y@@ @@H@@ duoc thay boi widgets.sh
+-- Shared settings for every widget. Placeholders are filled in by modules/widgets.sh
+-- Move a widget: hold Alt and drag it.
 conky.config = {
-    alignment = 'top_right',
-    gap_x = @@X@@,
-    gap_y = @@Y@@,
-    minimum_width = 300, maximum_width = 300,
+    alignment = 'top_left',
+    gap_x = @@X@@, gap_y = @@Y@@,
+    minimum_width = @@W@@, maximum_width = @@W@@,
     minimum_height = @@H@@,
+    border_inner_margin = 28,      -- 12px shadow + 16px padding, matches widgets.lua
     background = true,
     double_buffer = true,
     update_interval = @@INTERVAL@@,
     own_window = true,
-    own_window_type = 'desktop',
+    own_window_type = 'normal',    -- normal + undecorated so Alt+drag can move it
     own_window_class = 'Conky',
+    own_window_title = 'mactahoe-@@NAME@@',
     own_window_argb_visual = true,
     own_window_argb_value = 0,
     own_window_transparent = true,
     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
-    border_inner_margin = 18,
     draw_shades = false, draw_borders = false, draw_graph_borders = false,
     use_xft = true,
     font = 'Inter:size=10',
-    default_color = 'f5f5f7',
-    color1 = '0a84ff',   -- xanh macOS
-    color2 = '98989d',   -- xam phu
-    color3 = 'ff9f0a',   -- cam
+    default_color = 'ffffff',
+    color1 = '0a84ff',   -- system blue
+    color2 = 'd6d6db',   -- secondary label
+    color3 = 'ff453a',   -- system red
     override_utf8_locale = true,
     cpu_avg_samples = 2,
-    lua_load = '@@DIR@@/card.lua',
-    lua_draw_hook_pre = 'card',
+    lua_load = '@@DIR@@/widgets.lua',
+    lua_draw_hook_pre = '@@HOOK@@',
 }

@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
-# Thoi tiet tu wttr.in (khong can API key), cache 25 phut.
-# Doi thanh pho: sua MT_WEATHER_LOCATION trong ~/.config/mint-mactahoe-vn/widgets.env (de trong = tu nhan theo IP)
+# Weather from wttr.in (no API key), cached for 25 minutes.
+# Set your city in ~/.config/mint-mactahoe-vn/widgets.env (empty = detect by IP)
 [[ -f "$HOME/.config/mint-mactahoe-vn/widgets.env" ]] && . "$HOME/.config/mint-mactahoe-vn/widgets.env"
 LOC="${MT_WEATHER_LOCATION:-}"
-CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/mint-mactahoe-vn/weather.txt"
+CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/mint-mactahoe-vn/weather-en.txt"
 mkdir -p "$(dirname "$CACHE")"
 if [[ ! -s "$CACHE" || $(( $(date +%s) - $(stat -c %Y "$CACHE") )) -gt 1500 ]]; then
-  d=$(curl -fsm 10 "https://wttr.in/${LOC// /+}?format=%l|%t|%C|%h|%w|%f&lang=vi&m") && [[ "$d" == *"|"* ]] && echo "$d" > "$CACHE"
+  d=$(curl -fsm 10 "https://wttr.in/${LOC// /+}?format=%l|%t|%C|%h|%f&m") && [[ "$d" == *"|"* ]] && echo "$d" > "$CACHE"
 fi
-if ! IFS='|' read -r loc temp cond hum wind feels < "$CACHE" 2>/dev/null; then
-  echo '${color2}Chưa có dữ liệu (cần Internet)${color}'; exit 0
+if ! IFS='|' read -r loc temp cond hum feels < "$CACHE" 2>/dev/null; then
+  echo '${font Inter:bold:size=10}Weather${font}'
+  echo '${color2}No data (offline)${color}'; exit 0
 fi
-echo "\${font Inter:weight=Light:size=30}${temp/+/}\${font}  \${font Inter:size=11}${cond}\${font}"
-[[ "$loc" =~ ^[0-9.,\ -]+$ ]] && loc="Vị trí hiện tại"
-echo "\${color2}${loc%%,*}\${color}"
-echo "Cảm giác ${feels/+/} \${alignr}Ẩm ${hum}  Gió ${wind}"
+[[ -n "$LOC" ]] && loc="$LOC"
+[[ "$loc" =~ ^[0-9.,\ -]+$ ]] && loc="My Location"
+temp=${temp/+/}; feels=${feels/+/}
+echo "\${font Inter:size=9}\${color2}${loc%%,*}\${color}\${font}"
+echo "\${voffset -2}\${font Inter Light:size=38}${temp%C}\${font}"
+echo "\${voffset 4}\${font Inter:size=10}${cond:0:17}\${font}"
+echo "\${font Inter:size=9}\${color2}Feels ${feels%C}\${color}\${font}"
