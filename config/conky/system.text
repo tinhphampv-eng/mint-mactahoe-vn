@@ -1,0 +1,8 @@
+${color2}${font Inter:weight=SemiBold:size=9}MÁY TÍNH${font}${color}
+CPU ${alignr}${cpu cpu0}%   ${color3}${hwmon coretemp temp 1}°C${color}
+${color1}${cpubar 6}${color}
+RAM ${alignr}${mem} / ${memmax}
+${color1}${membar 6}${color}
+Ổ đĩa ${alignr}${fs_used /} / ${fs_size /}
+${color1}${fs_bar 6 /}${color}
+${execpi 4 @@DIR@@/network.sh}

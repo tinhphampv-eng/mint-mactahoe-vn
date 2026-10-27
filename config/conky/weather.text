@@ -1,0 +1,2 @@
+${color2}${font Inter:weight=SemiBold:size=9}THỜI TIẾT${font}${color}
+${execpi 600 @@DIR@@/weather.sh}

@@ -1,0 +1,3 @@
+${font Inter:weight=Light:size=50}${time %H:%M}${font}
+${font Inter:weight=SemiBold:size=13}${color1}${execi 600 LC_TIME=vi_VN.UTF-8 date '+%A'}${color}${font}
+${font Inter:size=11}${color2}${execi 600 LC_TIME=vi_VN.UTF-8 date '+%d tháng %m, %Y'}${color}${font}
