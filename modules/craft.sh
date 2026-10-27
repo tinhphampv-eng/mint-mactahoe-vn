@@ -47,6 +47,7 @@ print(d.get("tag_name", "?"), deb or "-", sha or "-")' <<<"$api")
       ok "Da kiem tra SHA-256"
     fi
     run sudo apt-get install -y "$deb" && ok "Da cai $app $tag"
+    run rm -f "$deb"   # don file .deb (moi app 20-125MB)
   done
   echo "     Mo app trong Menu, hoac them vao Dock. Cap nhat: chay lai './install.sh craft'"
 }
