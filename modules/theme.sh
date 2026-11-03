@@ -17,6 +17,9 @@ module_theme() {
   ( cd "$SRC_DIR/WhiteSur-cursors" && run ./install.sh ) >/dev/null || die "Cai con tro that bai"
 
   local icon="MacTahoe"; [[ "$COLOR_VARIANT" == Dark ]] && icon="MacTahoe-dark"
+  [[ "$COLOR_VARIANT" == Dark ]] || { whisker_icons && icon="MacTahoe-VN"; }
+  run mkdir -p "$HOME/.config/gtk-3.0"
+  run cp "$REPO_DIR/config/gtk/gtk.css" "$HOME/.config/gtk-3.0/gtk.css"
   xfset xsettings /Net/ThemeName        string "MacTahoe-$COLOR_VARIANT"
   xfset xsettings /Net/IconThemeName    string "$icon"
   xfset xsettings /Gtk/CursorThemeName  string "WhiteSur-cursors"
@@ -45,4 +48,25 @@ module_theme() {
   run cp "$SRC_DIR/MacTahoe-gtk-theme/src/assets/gnome-shell/activities/activities-apple.svg" "$DATA_DIR/apple-white.svg"
 
   ok "Da ap dung MacTahoe-$COLOR_VARIANT"
+}
+
+# MacTahoe sang dung icon nguon mau trang (#f2f2f2) danh cho panel toi, nen tren menu Whisker nen sang
+# gan nhu khong thay. CSS khong doi mau duoc icon nay, nen tao theme MacTahoe-VN ke thua MacTahoe,
+# chi thay cac icon nguon bang ban mau toi.
+whisker_icons() {
+  local src="$HOME/.local/share/icons/MacTahoe/status/22" dst="$HOME/.local/share/icons/MacTahoe-VN"
+  [[ -d "$src" || "$DRY_RUN" == 1 ]] || { warn "Khong thay $src, bo qua icon nguon."; return 1; }
+  run mkdir -p "$dst/scalable"
+  if [[ "$DRY_RUN" != 1 ]]; then
+    printf '%s\n' '[Icon Theme]' 'Name=MacTahoe-VN' 'Comment=MacTahoe + icon nguon toi cho menu Whisker' \
+      'Inherits=MacTahoe,hicolor,breeze' 'Directories=scalable' '' \
+      '[scalable]' 'Size=22' 'MinSize=8' 'MaxSize=64' 'Context=Status' 'Type=Scalable' > "$dst/index.theme"
+  fi
+  local n
+  # Whisker tim ten xfsm-* truoc, system-* sau
+  for n in system-lock-screen system-reboot system-shutdown system-suspend system-log-out \
+           xfsm-lock xfsm-reboot xfsm-shutdown xfsm-suspend xfsm-logout; do
+    if [[ "$DRY_RUN" == 1 ]]; then echo "   [dry-run] $n.svg (#f2f2f2 -> #1d1d1f)"; continue; fi
+    sed 's/#f2f2f2/#1d1d1f/Ig' "$src/$n.svg" > "$dst/scalable/$n.svg"
+  done
 }

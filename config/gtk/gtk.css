@@ -1,0 +1,18 @@
+/* mint-mactahoe-vn: hang nut nguon trong menu Whisker (logo Apple goc trai).
+   Icon toi lay tu theme MacTahoe-VN (modules/theme.sh), o day chi chinh nen va hover. */
+#whiskermenu-window button.command-button {
+  min-width: 30px;
+  min-height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.05);
+  -gtk-icon-effect: none;
+}
+#whiskermenu-window button.command-button:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+#whiskermenu-window button.command-button:active {
+  background-color: rgba(0, 0, 0, 0.20);
+}
