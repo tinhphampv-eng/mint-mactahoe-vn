@@ -12,6 +12,7 @@ confirm "Tiep tuc?" || exit 0
 
 # Tat widget, khoi phuc panel/theme
 pkill -x conky 2>/dev/null
+pkill -f "mint-mactahoe-vn/power.py" 2>/dev/null
 rm -f "$HOME/.config/autostart/mint-mactahoe-widgets.desktop"
 systemctl --user disable --now mactahoe-wallpaper.timer 2>/dev/null
 pkill -x xfce4-panel 2>/dev/null

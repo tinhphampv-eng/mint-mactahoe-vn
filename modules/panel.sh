@@ -6,9 +6,13 @@ module_panel() {
   title "Thanh menu kieu macOS"
   apt_need xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin xfce4-notifyd
 
-  local apple="$DATA_DIR/apple-black.svg"
-  [[ "$COLOR_VARIANT" == Dark ]] && apple="$DATA_DIR/apple-white.svg"
-  [[ -f "$apple" || "$DRY_RUN" == 1 ]] || warn "Chua co logo Apple (chay module theme truoc). Dung icon mac dinh."
+  # Logo Apple la nhan hieu cua Apple: mac dinh dung logo Linux Mint, chi bat khi chon --apple-logo
+  local apple=""
+  if [[ "${APPLE_LOGO:-0}" == 1 ]]; then
+    apple="$DATA_DIR/apple-black.svg"
+    [[ "$COLOR_VARIANT" == Dark ]] && apple="$DATA_DIR/apple-white.svg"
+    [[ -f "$apple" || "$DRY_RUN" == 1 ]] || { warn "Chua co logo Apple (chay module theme truoc). Dung icon mac dinh."; apple=""; }
+  fi
 
   run pkill -x xfce4-panel || true
   run xfconf-query -c xfce4-panel -p /panels  -rR 2>/dev/null || true
@@ -36,8 +40,9 @@ module_panel() {
   xfset xfce4-panel /panels/panel-1/enter-opacity        uint   100
   xfset xfce4-panel /panels/panel-1/leave-opacity        uint   100
 
-  # Menu Apple
-  [[ -f "$apple" ]] && xfset xfce4-panel /plugins/plugin-1/button-icon string "$apple"
+  # Nut menu: logo Linux Mint, hoac logo Apple neu chon --apple-logo
+  if [[ -n "$apple" ]]; then xfset xfce4-panel /plugins/plugin-1/button-icon string "$apple"
+  else xfset xfce4-panel /plugins/plugin-1/button-icon string "linuxmint-logo-ring-symbolic"; fi
   xfset xfce4-panel /plugins/plugin-1/show-button-title bool false
   xfset xfce4-panel /plugins/plugin-1/show-button-icon  bool true
   # Khoang trong day thanh sang phai

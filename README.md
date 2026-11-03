@@ -25,7 +25,7 @@ Hầu hết hướng dẫn "Linux đẹp như Mac" viết cho **Ubuntu GNOME** v
 | Hệ điều hành | Ubuntu/Fedora **GNOME 48+** | **Linux Mint XFCE**: nhẹ, quen tay với người từ Windows |
 | Máy phù hợp | Máy khá trở lên | **PC cũ, ổ HDD, RAM 4–8GB** vẫn mượt |
 | Khám máy trước khi cài | ✗ | ✓ `./install.sh check`: HDD hay SSD, boot mấy giây, dịch vụ nào chậm |
-| Widget màn hình | Extension GNOME | ✓ **Đồng hồ lớn trong suốt** và 4 thẻ kính kiểu macOS 26: thời tiết, lịch khoanh đỏ, vòng tròn CPU/RAM, nhạc. Giữ Alt + kéo để di chuyển |
+| Widget màn hình | Extension GNOME | ✓ **Đồng hồ lớn trong suốt** và 4 thẻ kính kiểu macOS 26: thời tiết, lịch khoanh đỏ, vòng tròn CPU/RAM, nhạc, cùng thẻ nút nguồn. Giữ Alt + kéo để di chuyển |
 | Hình nền | 1–2 hình | ✓ 10 hình (Tahoe, Sonoma, Ventura, Monterey, Big Sur) và **hình nền động đổi theo giờ** |
 | Gõ tiếng Việt | Tuỳ bản | ✓ ibus-bamboo, bấm Super+Space để chuyển |
 | Tối ưu PC cũ | ✗ | ✓ preload, tắt dịch vụ thừa (**hỏi từng mục**), Docker chỉ chạy khi cần |
@@ -56,9 +56,9 @@ cd mint-mactahoe-vn
 | `./install.sh look` | Trọn bộ giao diện (theme, hình nền, panel, dock, widgets) |
 | `./install.sh theme` | Theme MacTahoe, icon, con trỏ, font Inter, hình nền |
 | `./install.sh wallpaper` | 10 hình nền macOS và hình nền động (ngày sáng, đêm tối) |
-| `./install.sh panel` | Thanh menu trên cùng: logo , khay hệ thống, đồng hồ |
+| `./install.sh panel` | Thanh menu trên cùng: logo Linux Mint (tuỳ chọn logo Apple), khay hệ thống, đồng hồ |
 | `./install.sh dock` | Dock Plank ở đáy màn hình, phóng to icon khi rê chuột |
-| `./install.sh widgets` | 5 widget kiểu macOS |
+| `./install.sh widgets` | 5 widget kiểu macOS và thẻ nút nguồn |
 | `./install.sh vietnamese` | Bộ gõ tiếng Việt |
 | `./install.sh optimize` | Tối ưu PC cũ |
 | `./install.sh nosleep` | Không bao giờ sleep |
@@ -66,6 +66,7 @@ cd mint-mactahoe-vn
 | `./install.sh ai` | Docker, Node.js, Python cho AI Agent / automation |
 | `./install.sh craft` | PhotoCraft, VectorCraft, PdfCraft, WordCraft, GridCraft (bản .deb mới nhất, kiểm tra SHA-256) |
 | `./install.sh --dark look` | Dùng bản Tối |
+| `./install.sh --apple-logo panel` | Dùng logo Apple cho nút menu (mặc định: logo Linux Mint) |
 | `./install.sh --dry-run all` | Xem trước, không thay đổi gì |
 
 ### Widget
@@ -81,6 +82,7 @@ Một **đồng hồ lớn trong suốt** nằm thẳng trên hình nền, bên 
 | Calendar | Lịch tháng kiểu Apple: tên tháng màu đỏ, **khoanh tròn đỏ ngày hôm nay** |
 | Now Playing | Bài đang phát trên Spotify, YouTube (Chrome/Firefox), VLC... |
 | System | **Vòng tròn CPU, MEM, DISK** như widget Pin của macOS, kèm nhiệt độ CPU và tốc độ mạng |
+| Power | Nút **Khoá · Ngủ · Đăng xuất · Khởi động lại · Tắt máy**, hỏi xác nhận trước khi tắt. Nút Ngủ tự ẩn khi đã chạy `nosleep` |
 
 - **Di chuyển:** giữ **Alt** rồi kéo widget.
 - **Đổi thành phố thời tiết:** sửa `~/.config/mint-mactahoe-vn/widgets.env`, ví dụ `MT_WEATHER_LOCATION="Da Nang"`.
@@ -132,7 +134,7 @@ Phần script, cấu hình widget và tài liệu trong repo này dùng giấy p
 Most "make Linux look like a Mac" projects target Ubuntu GNOME and only handle looks. This one is built for **Linux Mint XFCE on old hardware** (HDD, 4–8 GB RAM) and covers the whole switch:
 
 - `check`: hardware report (HDD vs SSD, boot time, slowest services) with upgrade tips, no changes made
-- `look`: MacTahoe theme, icons, cursors, 10 macOS wallpapers with a day/night dynamic wallpaper, macOS-style top bar, Plank dock, and 5 macOS 26-style glass widgets (Clock, Weather, Calendar, Now Playing, System rings) you can move with Alt+drag
+- `look`: MacTahoe theme, icons, cursors, 10 macOS wallpapers with a day/night dynamic wallpaper, macOS-style top bar, Plank dock, and 5 macOS 26-style glass widgets (Clock, Weather, Calendar, Now Playing, System rings) plus a power card (Lock, Sleep, Log out, Restart, Shut down) you can move with Alt+drag
 - `vietnamese`: ibus-bamboo Vietnamese input
 - `optimize`: preload, opt-in removal of unneeded services, on-demand Docker
 - `nosleep` and `remote`: always-on machine reachable from Mac/iPhone via RustDesk and Tailscale

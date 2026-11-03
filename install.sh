@@ -22,9 +22,9 @@ Module:
   look         Tron bo giao dien = theme + wallpaper + panel + dock + widgets
     theme        Theme MacTahoe, icon, con tro, font Inter, hinh nen
     wallpaper    10 hinh nen macOS + hinh nen dong doi theo gio
-    panel        Thanh menu tren cung kieu macOS (logo Apple, dong ho, khay)
+    panel        Thanh menu tren cung kieu macOS (logo Mint, dong ho, khay)
     dock         Dock Plank o day man hinh
-    widgets      Widget kieu macOS 26: Clock, Weather, Calendar, Now Playing, System (Alt+keo de di chuyen)
+    widgets      Widget kieu macOS 26: Clock, Weather, Calendar, Now Playing, System, nut nguon (Alt+keo de di chuyen)
   vietnamese   Bo go tieng Viet ibus-bamboo
   optimize     Toi uu PC cu: preload, tat dich vu thua (hoi tung muc)
   nosleep      May luon hoat dong, khong sleep (de remote 24/7)
@@ -36,6 +36,7 @@ Module:
 
 Tuy chon:
   --dark       Dung ban Toi (mac dinh: Sang)
+  --apple-logo Dung logo Apple cho nut menu (mac dinh: logo Linux Mint)
   --dry-run    Chi in ra se lam gi, khong thay doi may
   -y, --yes    Khong hoi xac nhan
   -h, --help   Hien huong dan nay
@@ -54,6 +55,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --dark)      COLOR_VARIANT=Dark ;;
     --light)     COLOR_VARIANT=Light ;;
+    --apple-logo) APPLE_LOGO=1 ;;
     --dry-run)   DRY_RUN=1 ;;
     -y|--yes)    ASSUME_YES=1 ;;
     -h|--help)   usage; exit 0 ;;
